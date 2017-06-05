@@ -1,0 +1,39 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class RomantoInteger13 {
+    public static int romanToInt(String s) {
+        
+		char[] roman = {'I','V','X','L','C','D','M'};
+		int[] num = {1,5,10,50,100,500,1000};
+		
+		HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+		
+		for(int i=0;i<roman.length;i++){
+			map.put(roman[i], num[i]);
+		}
+		
+		int sum = map.get(s.charAt(0));
+		
+		for(int j=0; j<s.length()-1; j++){
+			if(map.get(s.charAt(j))>=map.get(s.charAt(j+1))){
+				sum += map.get(s.charAt(j+1));
+			}
+			else{
+				sum += map.get(s.charAt(j+1)) - 2*map.get(s.charAt(j));
+			}
+		}
+		return sum;
+    }
+    
+    public static void main(String[] args){
+    	Scanner cin = new Scanner(System.in);
+    	
+    	while(cin.hasNext()){
+    		String inputStr = cin.nextLine();
+    		int result = romanToInt(inputStr);
+    		System.out.println(result);
+    	}
+    	cin.close();
+    }
+}
