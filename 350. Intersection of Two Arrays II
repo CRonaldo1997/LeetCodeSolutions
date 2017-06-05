@@ -1,0 +1,72 @@
+//Given two arrays, write a function to compute their intersection.
+//
+//Example:
+//Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+
+public class IntersectionofTwoArrays350 {
+	
+	public static int[] intersect(int[] nums1, int[] nums2) {
+		ArrayList<Integer> arrayList = new ArrayList<Integer>();
+		HashMap<Integer,Integer> map1 = new HashMap<Integer,Integer>();
+		HashMap<Integer,Integer> map2 = new HashMap<Integer,Integer>();
+		HashMap<Integer,Integer> map3 = new HashMap<Integer,Integer>();
+		
+		for(int i=0;i<nums1.length;i++){
+			if(map1.containsKey(nums1[i])){
+				int count = map1.get(nums1[i]);
+				map1.put(nums1[i], count+1);
+			}
+			else{
+				map1.put(nums1[i], 1);
+			}
+		}
+		
+		for(int i=0;i<nums2.length;i++){
+			if(map2.containsKey(nums2[i])){
+				int count = map2.get(nums2[i]);
+				map2.put(nums2[i], count+1);
+			}
+			else{
+				map2.put(nums2[i], 1);
+			}
+		}
+		
+		for(int i=0;i<nums1.length;i++){
+			if(map2.containsKey(nums1[i])){
+				int minCount = Math.min(map1.get(nums1[i]), map2.get(nums1[i]));
+				map3.put(nums1[i], minCount);
+			}	
+		}
+		
+		Iterator iter = map3.entrySet().iterator();
+		while(iter.hasNext()){
+			Map.Entry entry = (Map.Entry) iter.next();
+			int curInt = (int)entry.getKey();
+			int curCount = (int)entry.getValue();
+			for(int k=0;k<curCount;k++){
+				arrayList.add(curInt);
+			}
+		}
+		int[] result = new int[arrayList.size()];
+		
+		for(int k=0; k<arrayList.size(); k++){
+			result[k]=arrayList.get(k);
+		}
+		return result;
+	}
+	
+	public static void main(String[] args){
+		int[] arr1 = {7,1,2,2,3,4,5,6};
+		int[] arr2 = {1,1,2,3,7};
+		int[] arrResult = intersect(arr1,arr2);
+		for(int k=0; k<arrResult.length;k++){
+			System.out.println(arrResult[k]);
+		}
+	}
+}
