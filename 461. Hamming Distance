@@ -1,0 +1,61 @@
+//461. Hamming Distance
+//The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
+//
+//Given two integers x and y, calculate the Hamming distance.
+//
+//Note:
+//0 ≤ x, y < 231.
+//
+//Example:
+//
+//Input: x = 1, y = 4
+//
+//Output: 2
+//
+//Explanation:
+//1   (0 0 0 1)
+//4   (0 1 0 0)
+//       ↑   ↑
+//
+//The above arrows point to positions where the corresponding bits are different.
+
+public class HammingDistance {
+	public static int hammingDistance(int x, int y) {
+		String strX = convetToReverseBinary(x);
+		String strY = convetToReverseBinary(y);
+		int lenDiff = Math.abs(strX.length()-strY.length());
+		for(int k=0;k<lenDiff;k++){
+			if(strX.length()>strY.length()){
+				strY += "0";
+			}
+			else{
+				strX += "0";
+			}
+		}
+		System.out.println(strX);
+		System.out.println(strY);
+		int len = Math.min(strX.length(),strY.length());
+		int count = 0;
+		
+		for(int i=0; i<len; i++){
+			if(strX.charAt(i) != strY.charAt(i)){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public static String convetToReverseBinary(int n){
+		StringBuffer sb = new StringBuffer();
+		while(n!=0){
+			int m = n % 2;
+			n = n / 2;
+			sb.append(m);
+		}
+		return sb.toString();
+	}
+	
+	public static void main(String[] args){
+		System.out.println(hammingDistance(1,4));
+	}
+}
