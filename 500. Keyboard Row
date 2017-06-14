@@ -1,0 +1,54 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+//Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+//Example 1:
+//Input: ["Hello", "Alaska", "Dad", "Peace"]
+//Output: ["Alaska", "Dad"]
+
+public class KeyboardRow {
+	
+	public int belongToWhich(char c){
+		String[] table = {"QWERTYUIOP","ASDFGHJKL","ZXCVBNM"};
+		String cStr = String.valueOf(c).toUpperCase();
+		for(int i=0;i<table.length; i++){
+			if(table[i].contains(cStr)){
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public String[] findWords(String[] words) {
+		
+		List<String> result = new ArrayList<String>();
+		for(int i=0; i<words.length; i++){
+			int iThRowInit = belongToWhich(words[i].charAt(0));
+			boolean complete = false;
+			for(int j=0; j<words[i].length(); j++){
+				char c = words[i].charAt(j);
+				int iThRow = belongToWhich(c);
+				if(iThRow != iThRowInit){
+					break;
+				}
+				if(j == words[i].length()-1){
+					complete = true;
+				}
+			}
+			if(complete == true){
+				result.add(words[i]);
+			}
+		}
+		return (String[])result.toArray(new String[result.size()]);
+	    }
+
+	public static void main(String[] args){
+		KeyboardRow kr = new KeyboardRow();
+		String[] words = {"Hello", "Alaska", "Dad", "Peace"};
+		String[] result = kr.findWords(words);
+		for(String i: result){
+			System.out.println(i);
+		}
+		}
+}
