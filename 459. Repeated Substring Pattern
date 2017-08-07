@@ -1,0 +1,45 @@
+//Given a non-empty string check if it can be constructed by taking a substring of it and appending multiple copies of the substring together. You may assume the given string consists of lowercase English letters only and its length will not exceed 10000.
+//
+//Example 1:
+//Input: "abab"
+//
+//Output: True
+//
+//Explanation: It's the substring "ab" twice.
+//Example 2:
+//Input: "aba"
+//
+//Output: False
+//Example 3:
+//Input: "abcabcabcabc"
+//
+//Output: True
+//
+//Explanation: It's the substring "abc" four times. (And the substring "abcabc" twice.)
+
+public class RSPattern459 {
+	public static boolean repeatedSubstringPattern(String s) {
+		int len = s.length();
+		
+		for(int l = 1; l < len/2 + 1; l++){
+			boolean isMatch = false;
+			for(int i = 1; i < len/l; i++){
+				if(s.substring(0, l).equals(s.substring(i*l,(i+1)*l))){
+					isMatch = true;
+				}
+				else{
+					isMatch = false;
+					break;
+				}
+			}
+			if(isMatch && len%l == 0){
+				return true;
+			}
+		}
+		return false;
+	    }
+	
+	public static void main(String[] args){
+		System.out.println(repeatedSubstringPattern("bb"));
+	}
+}
